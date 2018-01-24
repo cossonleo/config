@@ -28,7 +28,7 @@ let g:python3_host_prog = '/usr/bin/python3'
 let g:python3_host_skip_check = 1
 let g:loaded_python_provider = 0
 
-let mapleader='\'
+let mapleader=' '
 
 " map
 noremap <c-s> :w<cr>
@@ -70,8 +70,6 @@ Plug 'godlygeek/tabular'
 Plug 'haya14busa/incsearch.vim'
 " 移动光标
 Plug 'easymotion/vim-easymotion'
-Plug 'haya14busa/incsearch-easymotion.vim'
-"Plug 'justinmk/vim-sneak'
 " 自动完成另一半
 Plug 'jiangmiao/auto-pairs'
 "括号的颜色
@@ -107,25 +105,24 @@ Plug 'vim-scripts/TaskList.vim'
 
 """""""""""""""completion"""""""""""""""
 " 安装或更新过后要执行 UpdateRomePlugins
-Plug 'Shougo/deoplete.nvim'
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
+Plug 'roxma/nvim-completion-manager'
 """""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""language"""""""""""""""""""
+" 'do': 'install.sh',
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ }
+Plug 'huawenyu/neogdb.vim'
+
 " 安装或更新过后要到相应目录执行 make
-Plug 'zchee/deoplete-go', {'for': ['go']}
 Plug 'sebdah/vim-delve', {'for': ['go']}
-Plug 'fatih/vim-go', {'for': ['go']}
+"Plug 'fatih/vim-go', {'for': ['go']}
 """""""""""""""""""""""""""""""""""""""""""
 
 "c family highlight
 Plug 'arakashic/chromatica.nvim' , {'for':['cpp', 'h', 'hpp', 'c']}
-"Plug 'uplus/vim-clang-rename' ", {'for':['cpp', 'h', 'hpp', 'c']}
 Plug 'rhysd/vim-clang-format', {'for':['cpp', 'h', 'hpp', 'c']}
-Plug 'Cosson2017/vim-rtags', {'for':['cpp', 'h', 'hpp', 'c']}
-Plug 'spinotech/deoplete-rtags', {'for':['cpp', 'h', 'hpp', 'c']}
-Plug 'vim-scripts/a.vim', {'for':['cpp', 'h', 'hpp', 'c']}
 
 "qml
 Plug 'peterhoeg/vim-qml', {'for':['qml']}
@@ -214,17 +211,17 @@ let g:rainbow_active = 1
 
 
 "neosnippet
-imap <c-j>     <Plug>(neosnippet_expand_or_jump)
-smap <c-j>     <Plug>(neosnippet_expand_or_jump)
-xmap <c-j>     <Plug>(neosnippet_expand_target)
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-" For conceal markers.
-"if has('conceal')
-"  set conceallevel=2 concealcursor=niv
-"endif
-let g:neosnippet#enable_completed_snippet=1
-let g:neosnippet#snippets_directory='~/.config/nvim/plugged/neosnippet-snippets/neosnippets'
+"imap <c-j>     <Plug>(neosnippet_expand_or_jump)
+"smap <c-j>     <Plug>(neosnippet_expand_or_jump)
+"xmap <c-j>     <Plug>(neosnippet_expand_target)
+"smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+"\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+"" For conceal markers.
+""if has('conceal')
+""  set conceallevel=2 concealcursor=niv
+""endif
+"let g:neosnippet#enable_completed_snippet=1
+"let g:neosnippet#snippets_directory='~/.config/nvim/plugged/neosnippet-snippets/neosnippets'
 
 
 
@@ -249,14 +246,15 @@ let g:Lf_CommandMap = {'<C-C>': ['<Esc>', '<C-C>']}
 "tabular
 let g:tabular_loaded = 1
 
-
-
+"nvim-complete-manager
+let g:cm_refresh_length = 2
+let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
 
 "deoplete
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#set('go', 'rank', 9999)
-call deoplete#custom#set('rtags', 'rank', 9999)
-let g:deoplete#auto_complete_delay=25
+"let g:deoplete#enable_at_startup = 1
+"call deoplete#custom#set('go', 'rank', 9999)
+"call deoplete#custom#set('rtags', 'rank', 9999)
+"let g:deoplete#auto_complete_delay=25
 
 
 
@@ -309,13 +307,38 @@ let vim_markdown_preview_hotkey='<C-m>'
 let vim_markdown_preview_use_xdg_open=1
 
 "chromatica
-au FileType h,hpp,c,cpp ChromaticaStart
-let g:chromatica#enable_at_startup = 0
+"au FileType h,hpp,c,cpp ChromaticaStart
+let g:chromatica#enable_at_startup = 1
 let g:chromatica#highlight_feature_level = 1
 let g:chromatica#responsive_mode=1
+let g:chromatica#delay_ms = 50
 let g:chromatica#libclang_path = '/usr/lib/libclang.so'
 
-"vim-rtags
-"let g:rtagsUseDefaultMappings = 1
-let g:rtagsAutoLaunchRdm = 1
-let g:rtagsLeader = '<Space>'
+"LanguageClient
+let g:LanguageClient_serverCommands = {
+    \ 'h': ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
+    \ 'c': ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
+    \ 'hpp': ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
+    \ 'cpp': ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
+	\ 'go': ['go-langserver', '-gocodecompletion', '-func-snippet-enabled', '-logfile=/tmp/golangserver.log'],
+    \ 'javascript': ['node','/home/admin/usr/javascript-typescript-langserver/lib/language-server-stdio'],
+    \ 'javascript.jsx': ['node','/home/admin/usr/javascript-typescript-langserver/lib/language-server-stdio'],
+    \ 'typescript': ['node','/home/admin/usr/javascript-typescript-langserver/lib/language-server-stdio'],
+	\ 'xml': ['node','/home/admin/usr/javascript-typescript-langserver/lib/language-server-stdio'],
+	\ 'python': ['pyls', '--log-file=/tmp/pyls.log'],
+	\ 'rust': ['rustup', 'run', 'stable', 'rls'],
+	\ 'lua': ['lua-lsp'],
+    \ } 
+
+let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings 
+let g:LanguageClient_settingsPath = '/home/admin/.config/nvim/settings.json'
+"set completefunc=LanguageClient#complete
+set fo=""
+"set formatexpr=LanguageClient_textDocument_rangeFormatting()
+au FileType go,rs,py,js,ts,lua nnoremap <silent> gq :call LanguageClient_textDocument_formatting()<CR>
+au FileType c,cpp,h,hpp nnoremap <silent> gq :ClangFormat<CR>
+nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
+nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
