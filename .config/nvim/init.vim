@@ -19,6 +19,9 @@ set background=dark
 set cursorline
 set cursorcolumn
 set mouse=a
+set ignorecase
+set smartcase
+set fo=""
 "set list
 "set foldmethod=syntax
 
@@ -94,26 +97,28 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "git
-"Plug 'mhinz/vim-signify'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'gregsexton/gitv'
 Plug 'vim-scripts/TaskList.vim'
-"Plug 'Yggdroot/indentLine'
 
 
 """""""""""""""completion"""""""""""""""
 " 安装或更新过后要执行 UpdateRomePlugins
-Plug 'roxma/nvim-completion-manager'
+"Plug 'roxma/nvim-completion-manager'
+Plug 'Shougo/deoplete.nvim'
 """""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""language"""""""""""""""""""
 " 'do': 'install.sh',
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
+	\ 'do': './install.sh',
     \ }
 Plug 'huawenyu/neogdb.vim'
+"UpdateRomePlugins
+"Plug 'c0r73x/neotags.nvim'
 
 " 安装或更新过后要到相应目录执行 make
 Plug 'sebdah/vim-delve', {'for': ['go']}
@@ -121,7 +126,7 @@ Plug 'sebdah/vim-delve', {'for': ['go']}
 """""""""""""""""""""""""""""""""""""""""""
 
 "c family highlight
-Plug 'arakashic/chromatica.nvim' , {'for':['cpp', 'h', 'hpp', 'c']}
+Plug 'arakashic/chromatica.nvim' ", {'for':['cpp', 'h', 'hpp', 'c']}
 Plug 'rhysd/vim-clang-format', {'for':['cpp', 'h', 'hpp', 'c']}
 
 "qml
@@ -251,10 +256,10 @@ let g:cm_refresh_length = 2
 let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
 
 "deoplete
-"let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 "call deoplete#custom#set('go', 'rank', 9999)
 "call deoplete#custom#set('rtags', 'rank', 9999)
-"let g:deoplete#auto_complete_delay=25
+let g:deoplete#auto_complete_delay=25
 
 
 
@@ -333,12 +338,11 @@ let g:LanguageClient_serverCommands = {
 let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings 
 let g:LanguageClient_settingsPath = '/home/admin/.config/nvim/settings.json'
 "set completefunc=LanguageClient#complete
-set fo=""
 "set formatexpr=LanguageClient_textDocument_rangeFormatting()
 au FileType go,rs,py,js,ts,lua nnoremap <silent> gq :call LanguageClient_textDocument_formatting()<CR>
 au FileType c,cpp,h,hpp nnoremap <silent> gq :ClangFormat<CR>
 nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
+nnoremap <silent> gf :call LanguageClient_textDocument_references()<CR>
 nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> gr :call LanguageClient_textDocument_rename()<CR>
