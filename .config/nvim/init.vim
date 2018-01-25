@@ -102,6 +102,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'gregsexton/gitv'
 Plug 'vim-scripts/TaskList.vim'
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf.vim'
 
 
 """""""""""""""completion"""""""""""""""
