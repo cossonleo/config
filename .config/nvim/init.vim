@@ -338,7 +338,7 @@ let g:LanguageClient_serverCommands = {
     \ } 
 
 let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings 
-let g:LanguageClient_settingsPath = '/home/admin/.config/nvim/settings.json'
+let g:LanguageClient_settingsPath = $HOME . '/.config/nvim/settings.json'
 "set completefunc=LanguageClient#complete
 "set formatexpr=LanguageClient_textDocument_rangeFormatting()
 au FileType go,rs,py,js,ts,lua nnoremap <silent> gq :call LanguageClient_textDocument_formatting()<CR>
