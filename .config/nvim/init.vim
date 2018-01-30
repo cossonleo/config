@@ -108,8 +108,8 @@ Plug 'vim-scripts/TaskList.vim'
 
 """""""""""""""completion"""""""""""""""
 " 安装或更新过后要执行 UpdateRomePlugins
-"Plug 'roxma/nvim-completion-manager'
-Plug 'Shougo/deoplete.nvim'
+Plug 'roxma/nvim-completion-manager'
+"Plug 'Shougo/deoplete.nvim'
 """""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""language"""""""""""""""""""
@@ -124,7 +124,7 @@ Plug 'huawenyu/neogdb.vim'
 
 " 安装或更新过后要到相应目录执行 make
 Plug 'sebdah/vim-delve', {'for': ['go']}
-"Plug 'fatih/vim-go', {'for': ['go']}
+Plug 'fatih/vim-go', {'for': ['go']}
 """""""""""""""""""""""""""""""""""""""""""
 
 "c family highlight
@@ -173,10 +173,7 @@ let g:lt_height = 10
 
 " vim-go
 let g:go_bin_path = expand("~/.config/nvim/golang-tools")
-au FileType go nnoremap <m-g> :GoDef<cr>
 au FileType go nnoremap <m-f> :GoReferrers<cr>
-"let g:go_fmt_autosave = 0
-let g:go_fmt_command = "goimports"
 
 let g:go_highlight_array_whitespace_error = 0
 let g:go_highlight_chan_whitespace_error = 0
@@ -259,9 +256,10 @@ let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
 
 "deoplete
 let g:deoplete#enable_at_startup = 1
+"let g:deoplete#auto_complete_start_length = 1
 "call deoplete#custom#set('go', 'rank', 9999)
 "call deoplete#custom#set('rtags', 'rank', 9999)
-let g:deoplete#auto_complete_delay=25
+let g:deoplete#auto_complete_delay=0
 
 
 
@@ -322,16 +320,16 @@ let g:chromatica#delay_ms = 50
 let g:chromatica#libclang_path = '/usr/lib/libclang.so'
 
 "LanguageClient
+
+au BufRead,BufNewFile *.ts	set filetype=javascript
+au BufRead,BufNewFile *.h set filetype=c
+au BufRead,BufNewFile *.cc,*.hpp set filetype=cpp
 let g:LanguageClient_serverCommands = {
-    \ 'h': ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
     \ 'c': ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
-    \ 'hpp': ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
     \ 'cpp': ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
 	\ 'go': ['go-langserver', '-gocodecompletion', '-func-snippet-enabled', '-logfile=/tmp/golangserver.log'],
     \ 'javascript': ['node','/home/admin/usr/javascript-typescript-langserver/lib/language-server-stdio'],
     \ 'javascript.jsx': ['node','/home/admin/usr/javascript-typescript-langserver/lib/language-server-stdio'],
-    \ 'typescript': ['node','/home/admin/usr/javascript-typescript-langserver/lib/language-server-stdio'],
-	\ 'xml': ['node','/home/admin/usr/javascript-typescript-langserver/lib/language-server-stdio'],
 	\ 'python': ['pyls', '--log-file=/tmp/pyls.log'],
 	\ 'rust': ['rustup', 'run', 'stable', 'rls'],
 	\ 'lua': ['lua-lsp'],
@@ -341,10 +339,14 @@ let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if yo
 let g:LanguageClient_settingsPath = '/home/admin/.config/nvim/settings.json'
 "set completefunc=LanguageClient#complete
 "set formatexpr=LanguageClient_textDocument_rangeFormatting()
-au FileType go,rs,py,js,ts,lua nnoremap <silent> gq :call LanguageClient_textDocument_formatting()<CR>
-au FileType c,cpp,h,hpp nnoremap <silent> gq :ClangFormat<CR>
-nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> gf :call LanguageClient_textDocument_references()<CR>
-nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
-nnoremap <silent> gr :call LanguageClient_textDocument_rename()<CR>
+au FileType go,rs,py,js,ts,lua nnoremap gq :call LanguageClient_textDocument_formatting()<CR>
+au FileType c,cpp nnoremap gq :ClangFormat<CR>
+nnoremap <silent> <m-]> :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <m-h> :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> <m-f> :call LanguageClient_textDocument_references()<CR>
+nnoremap <silent> <m-s> :call LanguageClient_textDocument_documentSymbol()<CR>
+nnoremap <silent> <m-r> :call LanguageClient_textDocument_rename()<CR>
+"nnoremap <silent> gb :call LanguageClient_cquery_base()<CR>
+"nnoremap <silent> gd :call LanguageClient_cquery_derived()<CR>
+"nnoremap <silent> gc :call LanguageClient_cquery_callers()<CR>
+"nnoremap <silent> gv :call LanguageClient_cquery_vars()<CR>
