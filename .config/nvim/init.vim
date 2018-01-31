@@ -119,13 +119,6 @@ Plug 'autozimu/LanguageClient-neovim', {
 	\ 'do': './install.sh',
     \ }
 Plug 'huawenyu/neogdb.vim'
-"UpdateRomePlugins
-"Plug 'c0r73x/neotags.nvim'
-
-" 安装或更新过后要到相应目录执行 make
-Plug 'sebdah/vim-delve', {'for': ['go']}
-Plug 'fatih/vim-go', {'for': ['go']}
-"""""""""""""""""""""""""""""""""""""""""""
 
 "c family highlight
 Plug 'arakashic/chromatica.nvim' ", {'for':['cpp', 'h', 'hpp', 'c']}
@@ -171,36 +164,11 @@ let g:lt_height = 10
 
 
 
-" vim-go
-let g:go_bin_path = expand("~/.config/nvim/golang-tools")
-au FileType go nnoremap <m-f> :GoReferrers<cr>
-
-let g:go_highlight_array_whitespace_error = 0
-let g:go_highlight_chan_whitespace_error = 0
-let g:go_highlight_space_tab_error = 0
-let g:go_highlight_trailing_whitespace_error = 0
-let g:go_highlight_generate_tags = 0
-let g:go_highlight_string_spellcheck = 1
-let g:go_highlight_format_strings = 1
-
-let g:go_highlight_extra_types = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_variable_declarations = 0
-let g:go_highlight_variable_assignments = 0
-
 
 " incsearch.vim
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
-"map / <Plug>(incsearch-easymotion-/)
-"map ? <Plug>(incsearch-easymotion-?)
-"map g/ <Plug>(incsearch-easymotion-stay)
 
 
 
@@ -211,8 +179,6 @@ set ttimeoutlen=100
 
 "rainbow
 let g:rainbow_active = 1
-
-
 
 "neosnippet
 "imap <c-j>     <Plug>(neosnippet_expand_or_jump)
@@ -320,8 +286,7 @@ let g:chromatica#delay_ms = 50
 let g:chromatica#libclang_path = '/usr/lib/libclang.so'
 
 "LanguageClient
-
-au BufRead,BufNewFile *.ts	set filetype=javascript
+au BufRead,BufNewFile *.ts,javascript.jsx	set filetype=javascript
 au BufRead,BufNewFile *.h set filetype=c
 au BufRead,BufNewFile *.cc,*.hpp set filetype=cpp
 let g:LanguageClient_serverCommands = {
@@ -329,14 +294,13 @@ let g:LanguageClient_serverCommands = {
     \ 'cpp': ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
 	\ 'go': ['go-langserver', '-gocodecompletion', '-func-snippet-enabled', '-logfile=/tmp/golangserver.log'],
     \ 'javascript': ['node','/home/admin/usr/javascript-typescript-langserver/lib/language-server-stdio'],
-    \ 'javascript.jsx': ['node','/home/admin/usr/javascript-typescript-langserver/lib/language-server-stdio'],
 	\ 'python': ['pyls', '--log-file=/tmp/pyls.log'],
 	\ 'rust': ['rustup', 'run', 'stable', 'rls'],
 	\ 'lua': ['lua-lsp'],
     \ } 
 
 let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings 
-let g:LanguageClient_settingsPath = $HOME . '/.config/nvim/settings.json'
+let g:LanguageClient_settingsPath = '/home/admin/.config/nvim/settings.json'
 "set completefunc=LanguageClient#complete
 "set formatexpr=LanguageClient_textDocument_rangeFormatting()
 au FileType go,rs,py,js,ts,lua nnoremap gq :call LanguageClient_textDocument_formatting()<CR>
@@ -346,7 +310,7 @@ nnoremap <silent> <m-h> :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> <m-f> :call LanguageClient_textDocument_references()<CR>
 nnoremap <silent> <m-s> :call LanguageClient_textDocument_documentSymbol()<CR>
 nnoremap <silent> <m-r> :call LanguageClient_textDocument_rename()<CR>
-"nnoremap <silent> gb :call LanguageClient_cquery_base()<CR>
-"nnoremap <silent> gd :call LanguageClient_cquery_derived()<CR>
-"nnoremap <silent> gc :call LanguageClient_cquery_callers()<CR>
-"nnoremap <silent> gv :call LanguageClient_cquery_vars()<CR>
+nnoremap <silent> <m-b> :call LanguageClient_cquery_base()<CR>
+nnoremap <silent> <m-d> :call LanguageClient_cquery_derived()<CR>
+nnoremap <silent> <m-c> :call LanguageClient_cquery_callers()<CR>
+nnoremap <silent> <m-v> :call LanguageClient_cquery_vars()<CR>
