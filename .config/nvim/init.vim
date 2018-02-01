@@ -19,7 +19,7 @@ set background=dark
 set cursorline
 set cursorcolumn
 set mouse=a
-set ignorecase
+"set ignorecase
 set smartcase
 set fo=""
 "set list
@@ -45,6 +45,7 @@ tnoremap <C-w>h <C-\><C-N><C-w>h
 tnoremap <C-w>j <C-\><C-N><C-w>j
 tnoremap <C-w>k <C-\><C-N><C-w>k
 tnoremap <C-w>l <C-\><C-N><C-w>l
+inoremap <c-o> <c-x><c-u>
 
 "completion
 inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
