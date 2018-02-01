@@ -45,7 +45,8 @@ tnoremap <C-w>h <C-\><C-N><C-w>h
 tnoremap <C-w>j <C-\><C-N><C-w>j
 tnoremap <C-w>k <C-\><C-N><C-w>k
 tnoremap <C-w>l <C-\><C-N><C-w>l
-inoremap <c-o> <c-x><c-u>
+inoremap <c-o> <c-x><c-o>
+ 
 
 "completion
 inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
@@ -311,7 +312,7 @@ let g:LanguageClient_serverCommands = {
 
 let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings 
 let g:LanguageClient_settingsPath = '/home/admin/.config/nvim/settings.json'
-set completefunc=LanguageClient#complete
+set completefunc=LanguageClient#complete    "<c-x><c-u>
 "set formatexpr=LanguageClient_textDocument_rangeFormatting()
 au FileType go,rs,py,js,ts,lua nnoremap gq :call LanguageClient_textDocument_formatting()<CR>
 au FileType c,cpp nnoremap gq :ClangFormat<CR>
