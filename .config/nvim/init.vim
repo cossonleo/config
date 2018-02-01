@@ -219,6 +219,15 @@ let g:tabular_loaded = 1
 "nvim-complete-manager
 let g:cm_refresh_length = 2
 let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
+let g:cm_sources_override = {
+			    \ 'cm-tags': {'enable':0},
+				\ 'cm-jedi': {'enable': 0},
+				\ 'cm-gocode': {'enable':0},
+				\ 'cm-bufkeyword': {'enable':0},
+				\ 'cm-keyword-continue': {'enable': 0},
+				\ 'cm-tmux': {'enable': 0},
+				\ 'cm-filepath': {'enable': 0},
+			    \ }
 
 "deoplete
 let g:deoplete#enable_at_startup = 1
@@ -301,7 +310,7 @@ let g:LanguageClient_serverCommands = {
 
 let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings 
 let g:LanguageClient_settingsPath = '/home/admin/.config/nvim/settings.json'
-"set completefunc=LanguageClient#complete
+set completefunc=LanguageClient#complete
 "set formatexpr=LanguageClient_textDocument_rangeFormatting()
 au FileType go,rs,py,js,ts,lua nnoremap gq :call LanguageClient_textDocument_formatting()<CR>
 au FileType c,cpp nnoremap gq :ClangFormat<CR>
