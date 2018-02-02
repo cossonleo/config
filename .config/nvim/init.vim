@@ -130,7 +130,7 @@ Plug 'rhysd/vim-clang-format', {'for':['cpp', 'h', 'hpp', 'c']}
 Plug 'peterhoeg/vim-qml', {'for':['qml']}
 
 "ale
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 
 "markdown
 "Plug 'plasticboy/vim-markdown'
@@ -239,28 +239,28 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay=0
 
 
-
-"ale
+"
+""ale
 ""自定义跳转错误行快捷键：
-nmap <silent> <c-k> <Plug>(ale_previous_wrap)
-nmap <silent> <c-j> <Plug>(ale_next_wrap)
-" 进入文件不自动运行
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 0
-" Enable all of the linters you want for Go.
-let g:ale_linters = {'go': ['go build'], 'cpp':[], 'c':[], 'h':[], 'hpp':[]}
-""保持侧边栏可见：
-let g:ale_sign_column_always = 0
-"""改变错误和警告标识符：
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
-"""改变命令行消息：
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-"" Write this in your vimrc file
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 0
+"nmap <silent> <c-k> <Plug>(ale_previous_wrap)
+"nmap <silent> <c-j> <Plug>(ale_next_wrap)
+"" 进入文件不自动运行
+"let g:ale_lint_on_text_changed = 'never'
+"let g:ale_lint_on_enter = 0
+"" Enable all of the linters you want for Go.
+"let g:ale_linters = {'go': ['go build'], 'cpp':[], 'c':[], 'h':[], 'hpp':[]}
+"""保持侧边栏可见：
+"let g:ale_sign_column_always = 0
+""""改变错误和警告标识符：
+"let g:ale_sign_error = '>>'
+"let g:ale_sign_warning = '--'
+""""改变命令行消息：
+"let g:ale_echo_msg_error_str = 'E'
+"let g:ale_echo_msg_warning_str = 'W'
+"let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+""" Write this in your vimrc file
+"let g:ale_set_loclist = 0
+"let g:ale_set_quickfix = 0
 
 
 "easymotion
@@ -312,6 +312,7 @@ let g:LanguageClient_serverCommands = {
 
 let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings 
 let g:LanguageClient_settingsPath = '/home/admin/.config/nvim/settings.json'
+let g:LanguageClient_diagnosticsEnable = 0
 set completefunc=LanguageClient#complete    "<c-x><c-u>
 "set formatexpr=LanguageClient_textDocument_rangeFormatting()
 au FileType go,rs,py,js,ts,lua nnoremap gq :call LanguageClient_textDocument_formatting()<CR>
