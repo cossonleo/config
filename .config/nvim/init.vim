@@ -2,7 +2,7 @@ set cul
 set number
 set relativenumber
 set showcmd
-set cmdheight=1
+set cmdheight=2
 set ruler
 set confirm
 set scrolloff=3
@@ -115,6 +115,8 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 Plug 'huawenyu/neogdb.vim'
 Plug 'roxma/nvim-completion-manager'
+Plug 'Shougo/echodoc.vim'
+
 " 安装或更新过后要执行 UpdateRomePlugins
 "Plug 'Shougo/deoplete.nvim'
 
@@ -184,10 +186,10 @@ let g:rainbow_active = 1
 "xmap <c-j>     <Plug>(neosnippet_expand_target)
 "smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 "\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-"" For conceal markers.
-""if has('conceal')
-""  set conceallevel=2 concealcursor=niv
-""endif
+" For conceal markers.
+"if has('conceal')
+"  set conceallevel=2 concealcursor=niv
+"endif
 "let g:neosnippet#enable_completed_snippet=1
 "let g:neosnippet#snippets_directory='~/.config/nvim/plugged/neosnippet-snippets/neosnippets'
 
@@ -215,7 +217,7 @@ let g:Lf_CommandMap = {'<C-C>': ['<Esc>', '<C-C>']}
 let g:tabular_loaded = 1
 
 "nvim-complete-manager
-let g:cm_refresh_length = 2
+let g:cm_refresh_length = 1
 let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
 let g:cm_sources_override = {
 			    \ 'cm-tags': {'enable':0},
@@ -291,6 +293,9 @@ let g:chromatica#highlight_feature_level = 1
 let g:chromatica#responsive_mode=1
 let g:chromatica#delay_ms = 50
 let g:chromatica#libclang_path = '/usr/lib/libclang.so'
+
+"echodoc
+let g:echodoc_enable_at_startup = 1
 
 "LanguageClient
 au BufRead,BufNewFile *.ts,javascript.jsx	set filetype=javascript
