@@ -107,20 +107,16 @@ Plug 'vim-scripts/TaskList.vim'
 "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "Plug 'junegunn/fzf.vim'
 
-
-"""""""""""""""completion"""""""""""""""
-" 安装或更新过后要执行 UpdateRomePlugins
-Plug 'roxma/nvim-completion-manager'
-"Plug 'Shougo/deoplete.nvim'
-"""""""""""""""""""""""""""""""""""""""""""
-
 """"""""""""""""""language"""""""""""""""""""
 " 'do': 'install.sh',
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
-	\ 'do': './install.sh',
+	\ 'do': 'make release',
     \ }
 Plug 'huawenyu/neogdb.vim'
+Plug 'roxma/nvim-completion-manager'
+" 安装或更新过后要执行 UpdateRomePlugins
+"Plug 'Shougo/deoplete.nvim'
 
 "c family highlight
 Plug 'arakashic/chromatica.nvim' ", {'for':['cpp', 'h', 'hpp', 'c']}
@@ -311,7 +307,7 @@ let g:LanguageClient_serverCommands = {
     \ } 
 
 let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings 
-let g:LanguageClient_settingsPath = '/home/admin/.config/nvim/settings.json'
+let g:LanguageClient_settingsPath = $HOME.'/.config/nvim/settings.json'
 let g:LanguageClient_diagnosticsEnable = 0
 set completefunc=LanguageClient#complete    "<c-x><c-u>
 "set formatexpr=LanguageClient_textDocument_rangeFormatting()
