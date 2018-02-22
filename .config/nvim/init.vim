@@ -305,7 +305,7 @@ let g:LanguageClient_serverCommands = {
     \ 'c': ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
     \ 'cpp': ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
 	\ 'go': ['go-langserver', '-gocodecompletion', '-func-snippet-enabled', '-logfile=/tmp/golangserver.log'],
-    \ 'javascript': ['node','/home/admin/usr/javascript-typescript-langserver/lib/language-server-stdio'],
+    \ 'javascript': ['node',$HOME . '/usr/javascript-typescript-langserver/lib/language-server-stdio'],
 	\ 'python': ['pyls', '--log-file=/tmp/pyls.log'],
 	\ 'rust': ['rustup', 'run', 'stable', 'rls'],
 	\ 'lua': ['lua-lsp'],
