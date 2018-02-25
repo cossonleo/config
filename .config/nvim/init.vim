@@ -46,6 +46,7 @@ tnoremap <C-w>j <C-\><C-N><C-w>j
 tnoremap <C-w>k <C-\><C-N><C-w>k
 tnoremap <C-w>l <C-\><C-N><C-w>l
 inoremap <c-o> <c-x><c-o>
+nnoremap <leader>p :pc<cr>
  
 
 "completion
@@ -300,8 +301,10 @@ au BufRead,BufNewFile *.h set filetype=c
 au BufRead,BufNewFile *.cc,*.hpp set filetype=cpp
 let g:lsp_signs_enabled = 1         " enable signs
 let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+let g:lsp_preview_keep_focus = 1
 
 nnoremap <silent> <m-]> :LspDefinition<CR>
+nnoremap <silent> <m-g> :LspDefinition<CR>
 nnoremap <silent> <m-h> :LspHover<CR>
 nnoremap <silent> <m-f> :LspReferences<CR>
 nnoremap <silent> <m-s> :LspDocumentSymbol<CR>
@@ -317,13 +320,21 @@ if executable('go-langserver')
         \ })
 endif
 
-if executable('cquery')
+if executable('clangd')
     au User lsp_setup call lsp#register_server({
-        \ 'name': 'cquery',
-        \ 'cmd': {server_info->['cquery', '--language-server', '--log-file=/tmp/cq.log', '--init={"cacheDirectory": "/tmp/cquery"}']},
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd']},
         \ 'whitelist': ['c', 'cpp'],
         \ })
 endif
+
+"if executable('cquery')
+"    au User lsp_setup call lsp#register_server({
+"        \ 'name': 'cquery',
+"        \ 'cmd': {server_info->['cquery', '--language-server', '--log-file=/tmp/cq.log', '--init={"cacheDirectory": "/tmp/cquery"}']},
+"        \ 'whitelist': ['c', 'cpp'],
+"        \ })
+"endif
 
 if executable('rls')
     au User lsp_setup call lsp#register_server({
