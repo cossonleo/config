@@ -125,6 +125,9 @@ Plug 'rhysd/vim-clang-format', {'for':['cpp', 'h', 'hpp', 'c']}
 "qml
 Plug 'peterhoeg/vim-qml', {'for':['qml']}
 
+"tagbar 
+Plug 'majutsushi/tagbar'
+
 "ale
 "Plug 'w0rp/ale'
 
@@ -295,6 +298,15 @@ let g:chromatica#libclang_path = '/usr/lib/libclang.so'
 "echodoc
 let g:echodoc_enable_at_startup = 1
 
+"async-completion
+let g:asyncomplete_completion_delay = 25
+
+"neogdb
+let g:neobugger_leader = '<leader>'
+
+"tagbar
+nnoremap <F8> :TagbarToggle<CR>
+
 "vim-lsp
 au BufRead,BufNewFile *.ts,javascript.jsx	set filetype=javascript
 au BufRead,BufNewFile *.h set filetype=c
@@ -360,8 +372,3 @@ if executable('pyls')
         \ 'whitelist': ['python'],
         \ })
 endif
-"async-completion
-let g:asyncomplete_completion_delay = 25
-
-"neogdb
-let g:neobugger_leader = '<leader>'
