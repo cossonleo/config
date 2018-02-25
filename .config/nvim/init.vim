@@ -108,17 +108,14 @@ Plug 'vim-scripts/TaskList.vim'
 "Plug 'junegunn/fzf.vim'
 
 """"""""""""""""""language"""""""""""""""""""
-" 'do': 'install.sh',
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-	\ 'do': 'make release',
-    \ }
 Plug 'huawenyu/neogdb.vim'
-Plug 'roxma/nvim-completion-manager'
 Plug 'Shougo/echodoc.vim'
 
-" 安装或更新过后要执行 UpdateRomePlugins
-"Plug 'Shougo/deoplete.nvim'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/asyncomplete-neosnippet.vim'
 
 "c family highlight
 Plug 'arakashic/chromatica.nvim' ", {'for':['cpp', 'h', 'hpp', 'c']}
@@ -297,33 +294,63 @@ let g:chromatica#libclang_path = '/usr/lib/libclang.so'
 "echodoc
 let g:echodoc_enable_at_startup = 1
 
-"LanguageClient
+"vim-lsp
 au BufRead,BufNewFile *.ts,javascript.jsx	set filetype=javascript
 au BufRead,BufNewFile *.h set filetype=c
 au BufRead,BufNewFile *.cc,*.hpp set filetype=cpp
-let g:LanguageClient_serverCommands = {
-    \ 'c': ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
-    \ 'cpp': ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
-	\ 'go': ['go-langserver', '-gocodecompletion', '-func-snippet-enabled', '-logfile=/tmp/golangserver.log'],
-    \ 'javascript': ['node',$HOME . '/usr/javascript-typescript-langserver/lib/language-server-stdio'],
-	\ 'python': ['pyls', '--log-file=/tmp/pyls.log'],
-	\ 'rust': ['rustup', 'run', 'stable', 'rls'],
-	\ 'lua': ['lua-lsp'],
-    \ } 
+let g:lsp_signs_enabled = 1         " enable signs
+let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
 
-let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings 
-let g:LanguageClient_settingsPath = $HOME.'/.config/nvim/settings.json'
-let g:LanguageClient_diagnosticsEnable = 0
-set completefunc=LanguageClient#complete    "<c-x><c-u>
-"set formatexpr=LanguageClient_textDocument_rangeFormatting()
-au FileType go,rs,py,js,ts,lua nnoremap gq :call LanguageClient_textDocument_formatting()<CR>
-au FileType c,cpp nnoremap gq :ClangFormat<CR>
-nnoremap <silent> <m-]> :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <m-h> :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> <m-f> :call LanguageClient_textDocument_references()<CR>
-nnoremap <silent> <m-s> :call LanguageClient_textDocument_documentSymbol()<CR>
-nnoremap <silent> <m-r> :call LanguageClient_textDocument_rename()<CR>
-nnoremap <silent> <m-b> :call LanguageClient_cquery_base()<CR>
-nnoremap <silent> <m-d> :call LanguageClient_cquery_derived()<CR>
-nnoremap <silent> <m-c> :call LanguageClient_cquery_callers()<CR>
-nnoremap <silent> <m-v> :call LanguageClient_cquery_vars()<CR>
+nnoremap <silent> <m-]> :LspDefinition<CR>
+nnoremap <silent> <m-h> :LspHover<CR>
+nnoremap <silent> <m-f> :LspReferences<CR>
+nnoremap <silent> <m-s> :LspDocumentSymbol<CR>
+nnoremap <silent> <m-r> :LspRename<CR>
+nnoremap <silent> gq :LspDocumentFormat<CR>
+
+
+if executable('go-langserver')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'go-langserver',
+        \ 'cmd': {server_info->['go-langserver', '-gocodecompletion','-func-snippet-enabled', '-logfile=/tmp/golangserver.log']},
+        \ 'whitelist': ['go'],
+        \ })
+endif
+
+if executable('cquery')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'cquery',
+        \ 'cmd': {server_info->['cquery', '--language-server', '--log-file=/tmp/cq.log', '--init={"cacheDirectory": "/tmp/cquery"}']},
+        \ 'whitelist': ['c', 'cpp'],
+        \ })
+endif
+
+if executable('rls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rust-rls',
+        \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
+        \ 'whitelist': ['rust'],
+        \ })
+endif
+
+if executable('lua-lsp')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'lua-lsp',
+        \ 'cmd': {server_info->['lua-lsp']},
+        \ 'whitelist': ['lua'],
+        \ })
+endif
+
+if executable('pyls')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls', '--log-file=/tmp/pyls.log']},
+        \ 'whitelist': ['python'],
+        \ })
+endif
+"async-completion
+let g:asyncomplete_completion_delay = 25
+
+"neogdb
+let g:neobugger_leader = '<leader>'
