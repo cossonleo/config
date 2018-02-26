@@ -116,7 +116,6 @@ Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'prabirshrestha/asyncomplete-neosnippet.vim'
 
 "c family highlight
 Plug 'arakashic/chromatica.nvim' ", {'for':['cpp', 'h', 'hpp', 'c']}
@@ -298,7 +297,7 @@ let g:chromatica#libclang_path = '/usr/lib/libclang.so'
 "echodoc
 let g:echodoc_enable_at_startup = 1
 
-"async-completion
+"asyncomplete
 let g:asyncomplete_completion_delay = 25
 
 "neogdb
@@ -332,21 +331,21 @@ if executable('go-langserver')
         \ })
 endif
 
-if executable('clangd')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'clangd',
-        \ 'cmd': {server_info->['clangd']},
-        \ 'whitelist': ['c', 'cpp'],
-        \ })
-endif
-
-"if executable('cquery')
+"if executable('clangd')
 "    au User lsp_setup call lsp#register_server({
-"        \ 'name': 'cquery',
-"        \ 'cmd': {server_info->['cquery', '--language-server', '--log-file=/tmp/cq.log', '--init={"cacheDirectory": "/tmp/cquery"}']},
+"        \ 'name': 'clangd',
+"        \ 'cmd': {server_info->['clangd']},
 "        \ 'whitelist': ['c', 'cpp'],
 "        \ })
 "endif
+
+if executable('cquery')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'cquery',
+        \ 'cmd': {server_info->['cquery', '--language-server', '--log-file=/tmp/cq.log', '--init={"cacheDirectory": "/tmp/cquery"}']},
+        \ 'whitelist': ['c', 'cpp'],
+        \ })
+endif
 
 if executable('rls')
     au User lsp_setup call lsp#register_server({
