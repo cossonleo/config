@@ -1,3 +1,12 @@
+""""""""""""""""""""""""""""""""""""""""""
+"    LICENSE: MIT
+"     Author: Cosson
+"    Version: 0.1 
+" CreateTime: 2018-02-28 10:24:04
+" LastUpdate: 2018-02-28 10:24:04
+"       Desc: neovim init config
+""""""""""""""""""""""""""""""""""""""""""
+
 set cul 
 set number
 set relativenumber
@@ -5,7 +14,7 @@ set showcmd
 set cmdheight=2
 set ruler
 set confirm
-set scrolloff=3
+set scrolloff=0
 set tabstop=4
 set shiftwidth=4
 set clipboard+=unnamedplus " 系统安装xclip或xsel
@@ -133,6 +142,10 @@ Plug 'majutsushi/tagbar'
 "markdown
 "Plug 'plasticboy/vim-markdown'
 "Plug 'JamshedVesuna/vim-markdown-preview'
+"
+"mine
+Plug 'Cosson2017/neo-comment.nvim'
+Plug 'Cosson2017/neo-smooth-scroll.nvim'
 
 call plug#end()            
 
@@ -371,3 +384,21 @@ if executable('pyls')
         \ 'whitelist': ['python'],
         \ })
 endif
+
+"if executable('bash_lsp.sh')
+"	au User lsp_setup call lsp#register_server({
+"		\ 'name': 'bash-lsp',
+"		\ 'cmd': {server_info->['bash_lsp.sh']},
+"		\ 'whitelist': ['sh'],
+"		\ })
+"endif
+
+if executable('docker-langserver')
+	au User lsp_setup call lsp#register_server({
+		\ 'name': 'docker-langserver',
+		\ 'cmd': {server_info->['docker-langserver', '--stdio']},
+		\ 'whitelist': ['dockerfile'],
+		\ })
+endif
+
+"nnoremap <leader>c :call luaeval('require("init").add()')<cr>
