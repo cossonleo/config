@@ -146,6 +146,7 @@ Plug 'majutsushi/tagbar'
 "mine
 Plug 'Cosson2017/neo-comment.nvim'
 Plug 'Cosson2017/neo-smooth-scroll.nvim'
+Plug 'Cosson2017/neo-completor.nvim'
 
 call plug#end()            
 
