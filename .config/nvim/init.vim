@@ -386,13 +386,21 @@ if executable('pyls')
         \ })
 endif
 
-"if executable('bash_lsp.sh')
-"	au User lsp_setup call lsp#register_server({
-"		\ 'name': 'bash-lsp',
-"		\ 'cmd': {server_info->['bash_lsp.sh']},
-"		\ 'whitelist': ['sh'],
-"		\ })
-"endif
+if executable('main.js')
+	au User lsp_setup call lsp#register_server({
+		\ 'name': 'bash-lsp',
+		\ 'cmd': {server_info->['main.js', 'start']},
+		\ 'whitelist': ['sh'],
+		\ })
+endif
+
+if executable('typescript-language-server')
+	au User lsp_setup call lsp#register_server({
+		\ 'name': 'typescript-lsp',
+		\ 'cmd': {server_info->['typescript-language-server', '--stdio']},
+		\ 'whitelist': ['javascript'],
+		\ })
+endif
 
 if executable('docker-langserver')
 	au User lsp_setup call lsp#register_server({
