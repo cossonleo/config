@@ -3,7 +3,7 @@
 "     Author: Cosson
 "    Version: 0.1 
 " CreateTime: 2018-02-28 10:24:04
-" LastUpdate: 2018-02-28 10:24:04
+" LastUpdate: 2018-03-13 15:46:24
 "       Desc: neovim init config
 """"""""""""""""""""""""""""""""""""""""""
 
@@ -123,7 +123,7 @@ Plug 'Shougo/echodoc.vim'
 
 Plug 'prabirshrestha/async.vim'
 "Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/vim-lsp'
+Plug 'Cosson2017/vim-lsp'
 "Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 "c family highlight
@@ -147,6 +147,7 @@ Plug 'majutsushi/tagbar'
 Plug 'Cosson2017/neo-comment.nvim'
 Plug 'Cosson2017/neo-smooth-scroll.nvim'
 Plug 'Cosson2017/lsp-completor.nvim'
+
 call plug#end()            
 
 
@@ -327,6 +328,9 @@ let g:lsp_signs_enabled = 1         " enable signs
 let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
 let g:lsp_preview_keep_focus = 1
 
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('/tmp/vim-lsp.log')
+
 nnoremap <silent> <m-]> :LspDefinition<CR>
 nnoremap <silent> <m-g> :LspDefinition<CR>
 nnoremap <silent> <m-h> :LspHover<CR>
@@ -335,30 +339,31 @@ nnoremap <silent> <m-s> :LspDocumentSymbol<CR>
 nnoremap <silent> <m-r> :LspRename<CR>
 nnoremap <silent> gq :LspDocumentFormat<CR>
 
-
+" \ 'cmd': {server_info->['go-langserver', '-gocodecompletion','-func-snippet-enabled', '-logfile=/tmp/golangserver.log']},
+        "\ 'cmd': {server_info->['go-langserver', '-logfile=/tmp/golangserver.log']},
 if executable('go-langserver')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'go-langserver',
-        \ 'cmd': {server_info->['go-langserver', '-gocodecompletion','-func-snippet-enabled', '-logfile=/tmp/golangserver.log']},
+		\ 'cmd': {server_info->['go-langserver', '-gocodecompletion', '-logfile=/tmp/golangserver.log']},
         \ 'whitelist': ['go'],
         \ })
 endif
 
-if executable('clangd')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'clangd',
-        \ 'cmd': {server_info->['clangd']},
-        \ 'whitelist': ['c', 'cpp'],
-        \ })
-endif
-
-"if executable('cquery')
+"if executable('clangd')
 "    au User lsp_setup call lsp#register_server({
-"        \ 'name': 'cquery',
-"        \ 'cmd': {server_info->['cquery', '--language-server', '--log-file=/tmp/cq.log', '--init={"cacheDirectory": "/tmp/cquery"}']},
+"        \ 'name': 'clangd',
+"        \ 'cmd': {server_info->['clangd']},
 "        \ 'whitelist': ['c', 'cpp'],
 "        \ })
 "endif
+
+if executable('cquery')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'cquery',
+        \ 'cmd': {server_info->['cquery', '--language-server', '--log-file=/tmp/cq.log', '--init={"cacheDirectory": "/tmp/cquery"}']},
+        \ 'whitelist': ['c', 'cpp'],
+        \ })
+endif
 
 if executable('rls')
     au User lsp_setup call lsp#register_server({
