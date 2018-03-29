@@ -1,0 +1,8 @@
+VPATH = src:/usr/lib/clang:headers
+vpath %.c src
+vpath %.h header
+vpath % ../src
+srclist := $(wildcard *c)
+objects := $(patsubst %.c,%.o, $(srclist))
+main : $objects
+    cc -o main $(objects)
