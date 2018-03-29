@@ -3,7 +3,7 @@
 "     Author: Cosson
 "    Version: 0.1 
 " CreateTime: 2018-02-28 10:24:04
-" LastUpdate: 2018-03-13 15:46:24
+" LastUpdate: 2018-02-28 10:24:04
 "       Desc: neovim init config
 """"""""""""""""""""""""""""""""""""""""""
 
@@ -147,6 +147,7 @@ Plug 'majutsushi/tagbar'
 Plug 'Cosson2017/neo-comment.nvim'
 Plug 'Cosson2017/neo-smooth-scroll.nvim'
 Plug 'Cosson2017/lsp-completor.nvim'
+Plug 'Cosson2017/neo-debuger'
 
 call plug#end()            
 
@@ -357,12 +358,23 @@ endif
 "        \ })
 "endif
 
+"if executable('cquery')
+"    au User lsp_setup call lsp#register_server({
+"        \ 'name': 'cquery',
+"        \ 'cmd': {server_info->['cquery', '--language-server', '--log-file=/tmp/cq.log', '--init={"cacheDirectory": "/tmp/cquery"}']},
+"        \ 'whitelist': ['c', 'cpp'],
+"        \ })
+"endif
+
+"\ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
 if executable('cquery')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'cquery',
-        \ 'cmd': {server_info->['cquery', '--language-server', '--log-file=/tmp/cq.log', '--init={"cacheDirectory": "/tmp/cquery"}']},
-        \ 'whitelist': ['c', 'cpp'],
-        \ })
+   au User lsp_setup call lsp#register_server({
+      \ 'name': 'cquery',
+      \ 'cmd': {server_info->['cquery']},
+      \ 'root_uri': {server_info->lsp#utils#get_default_root_uri()},
+      \ 'initialization_options': { 'cacheDirectory': '/tmp/cquery' },
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+      \ })
 endif
 
 if executable('rls')
@@ -377,6 +389,8 @@ if executable('lua-lsp')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'lua-lsp',
         \ 'cmd': {server_info->['lua-lsp']},
+        \ 'root_uri': {server_info->lsp#utils#get_default_root_uri()},
+		\ 'initialization_options': { 'debugMode': 'false' },
         \ 'whitelist': ['lua'],
         \ })
 endif
@@ -388,14 +402,6 @@ if executable('pyls')
         \ 'cmd': {server_info->['pyls', '--log-file=/tmp/pyls.log']},
         \ 'whitelist': ['python'],
         \ })
-endif
-
-if executable('main.js')
-	au User lsp_setup call lsp#register_server({
-		\ 'name': 'bash-lsp',
-		\ 'cmd': {server_info->['main.js', 'start']},
-		\ 'whitelist': ['sh'],
-		\ })
 endif
 
 if executable('typescript-language-server')
