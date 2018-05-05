@@ -319,7 +319,33 @@ let g:asyncomplete_completion_delay = 25
 let g:neobugger_leader = '<leader>'
 
 "tagbar
-nnoremap <F8> :TagbarToggle<CR>
+nnoremap <F12> :TagbarToggle<CR>
+let g:tagbar_autoclose = 1
+let g:tagbar_autofocus = 1
+let g:tagbar_sort = 0
+let g:tagbar_ctags_bin = $HOME . "/usr/bin/ctags"
+let g:tagbar_type_go = {
+			\ 'ctagstype': 'go',
+			\ 'kinds': [
+			\ 'p:package',
+			\ 'i:imports:1',
+			\ 'c:constants',
+			\ 'v:variables',
+			\ 't:types',
+			\ 'w:fields',
+			\ 'm:methods',
+			\ 'f:functions',
+			\ 'r:constructor',
+			\ 'n:interfaces',
+			\],
+			\ 'sro':'.',
+			\ 'kind2scope':{
+				\ 't':'ctype',
+				\ 'n': 'ntype',
+			\},
+			\ 'ctagsbin': 'gotags',
+			\ 'ctagsargs': '-sort -silent',
+		\}
 
 "vim-lsp
 au BufRead,BufNewFile *.ts,javascript.jsx	set filetype=javascript
