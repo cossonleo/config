@@ -116,6 +116,9 @@ Plug 'gregsexton/gitv'
 Plug 'vim-scripts/TaskList.vim'
 "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "Plug 'junegunn/fzf.vim'
+"
+"rg
+Plug 'jremmen/vim-ripgrep'
 
 """"""""""""""""""language"""""""""""""""""""
 Plug 'huawenyu/neogdb.vim'
@@ -318,6 +321,9 @@ let g:asyncomplete_completion_delay = 25
 "neogdb
 let g:neobugger_leader = '<leader>'
 
+"rg 
+nnoremap <c-a> :Rg<cr>
+
 "tagbar
 nnoremap <F12> :TagbarToggle<CR>
 let g:tagbar_autoclose = 1
@@ -337,6 +343,7 @@ let g:tagbar_type_go = {
 			\ 'f:functions',
 			\ 'r:constructor',
 			\ 'n:interfaces',
+			\ 'e:embed',
 			\],
 			\ 'sro':'.',
 			\ 'kind2scope':{
@@ -364,6 +371,7 @@ nnoremap <silent> <m-h> :LspHover<CR>
 nnoremap <silent> <m-f> :LspReferences<CR>
 nnoremap <silent> <m-s> :LspDocumentSymbol<CR>
 nnoremap <silent> <m-r> :LspRename<CR>
+nnoremap <silent> <m-i> :LspImplement<CR>
 nnoremap <silent> gq :LspDocumentFormat<CR>
 
 " \ 'cmd': {server_info->['go-langserver', '-gocodecompletion','-func-snippet-enabled', '-logfile=/tmp/golangserver.log']},
