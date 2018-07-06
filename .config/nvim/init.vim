@@ -27,7 +27,7 @@ set termguicolors
 set background=dark
 set cursorline
 set cursorcolumn
-set mouse=a
+"set mouse=a
 "set ignorecase
 set smartcase
 set fo=""
@@ -46,8 +46,8 @@ let mapleader=' '
 noremap <c-s> :w<cr>
 nnoremap <F5> :make<cr>
 inoremap <c-s> <esc>:w<cr>
-noremap <c-a> :wa<cr>
-inoremap <c-a> <esc>:wa<cr>
+"noremap <c-a> :wa<cr>
+"inoremap <c-a> <esc>:wa<cr>
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-w><C-w> <C-\><C-N><C-w><C-w>
 tnoremap <C-w>h <C-\><C-N><C-w>h
@@ -104,7 +104,8 @@ Plug 'vim-scripts/fcitx.vim'
 "vim-signature
 Plug 'kshenoy/vim-signature'
 "leaderf
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+"Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'Shougo/denite.nvim'
 "airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -114,8 +115,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'gregsexton/gitv'
 Plug 'vim-scripts/TaskList.vim'
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-"Plug 'junegunn/fzf.vim'
 "
 "rg
 Plug 'jremmen/vim-ripgrep'
@@ -212,20 +211,36 @@ let g:rainbow_active = 1
 "let g:neosnippet#snippets_directory='~/.config/nvim/plugged/neosnippet-snippets/neosnippets'
 
 
+"denite
+nnoremap <c-p> :Denite file/rec<cr>
+nnoremap <c-b> :Denite buffer<cr>
+call denite#custom#map(
+	  \ 'insert',
+	  \ '<c-j>',
+	  \ '<denite:move_to_next_line>',
+	  \ 'noremap'
+	  \)
+call denite#custom#map(
+	  \ 'insert',
+	  \ '<c-k>',
+	  \ '<denite:move_to_previous_line>',
+	  \ 'noremap'
+	  \)
 
 "leaderf
-let g:Lf_UseMemoryCache = 0
-let g:Lf_ShortcutF = '<c-p>'
-let g:Lf_ShortcutB = '<c-b>'
-"nnoremap <c-p> :LeaderfFile<cr>
-"nnoremap <c-b> :LeaderfBuffer<cr>
-nnoremap <c-f> :LeaderfFunction<cr>
-nnoremap <c-g> :LeaderfBufTag<cr>
-let g:Lf_WildIgnore = {
-            \ 'dir': ['.svn','.git','.hg'],
-            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
-            \}
-let g:Lf_CommandMap = {'<C-C>': ['<Esc>', '<C-C>']}
+"let g:Lf_WorkingDirectoryMode = 'a'
+"let g:Lf_UseMemoryCache = 0
+"let g:Lf_ShortcutF = '<c-p>'
+"let g:Lf_ShortcutB = '<c-b>'
+""nnoremap <c-p> :LeaderfFile<cr>
+""nnoremap <c-b> :LeaderfBuffer<cr>
+"nnoremap <c-f> :LeaderfFunction<cr>
+"nnoremap <c-g> :LeaderfBufTag<cr>
+"let g:Lf_WildIgnore = {
+"            \ 'dir': ['.svn','.git','.hg'],
+"            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+"            \}
+"let g:Lf_CommandMap = {'<C-C>': ['<Esc>', '<C-C>']}
 "let g:Lf_Ctags ="~/usr/bin/ctags"
 
 
@@ -306,7 +321,7 @@ let vim_markdown_preview_use_xdg_open=1
 
 "chromatica
 "au FileType h,hpp,c,cpp ChromaticaStart
-let g:chromatica#enable_at_startup = 1
+let g:chromatica#enable_at_startup = 0
 let g:chromatica#highlight_feature_level = 1
 let g:chromatica#responsive_mode=1
 let g:chromatica#delay_ms = 50
@@ -354,6 +369,17 @@ let g:tagbar_type_go = {
 			\ 'ctagsargs': '-sort -silent',
 		\}
 
+"p  packages
+"f  functions
+"c  constants
+"t  types
+"v  variables
+"s  structs
+"i  interfaces
+"m  struct members
+"M  struct anonymous members
+"u  unknown
+
 "vim-lsp
 au BufRead,BufNewFile *.ts,javascript.jsx	set filetype=javascript
 au BufRead,BufNewFile *.h set filetype=c
@@ -388,14 +414,6 @@ endif
 "    au User lsp_setup call lsp#register_server({
 "        \ 'name': 'clangd',
 "        \ 'cmd': {server_info->['clangd']},
-"        \ 'whitelist': ['c', 'cpp'],
-"        \ })
-"endif
-
-"if executable('cquery')
-"    au User lsp_setup call lsp#register_server({
-"        \ 'name': 'cquery',
-"        \ 'cmd': {server_info->['cquery', '--language-server', '--log-file=/tmp/cq.log', '--init={"cacheDirectory": "/tmp/cquery"}']},
 "        \ 'whitelist': ['c', 'cpp'],
 "        \ })
 "endif
@@ -438,14 +456,6 @@ if executable('pyls')
         \ })
 endif
 
-if executable('typescript-language-server')
-	au User lsp_setup call lsp#register_server({
-		\ 'name': 'typescript-lsp',
-		\ 'cmd': {server_info->['typescript-language-server', '--stdio']},
-		\ 'whitelist': ['javascript'],
-		\ })
-endif
-
 if executable('docker-langserver')
 	au User lsp_setup call lsp#register_server({
 		\ 'name': 'docker-langserver',
@@ -455,3 +465,44 @@ if executable('docker-langserver')
 endif
 
 "nnoremap <leader>c :call luaeval('require("init").add()')<cr>
+au User lsp_setup call lsp#register_server({
+			\ 'name': 'php-language-server',
+			\ 'cmd': {server_info->['php', expand('~/.vim/plugged/php-language-server/bin/php-language-server.php')]},
+			\ 'whitelist': ['php']
+			\ })
+
+
+"\ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.flowconfig'))},
+if executable('javascript-typescript-stdio')
+	    au User lsp_setup call lsp#register_server({
+	            \ 'name': 'javascript-typescript-stdio',
+	            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'javascript-typescript-stdio']},
+	            \ 'whitelist': ['javascript'],
+	            \ })
+endif
+
+"if executable('css-languageserver')
+"    au User lsp_setup call lsp#register_server({
+"        \ 'name': 'css-languageserver',
+"        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
+"        \ 'whitelist': ['css', 'less', 'sass'],
+"        \ })
+"endif
+
+"if executable('html-languageserver')
+"    au User lsp_setup call lsp#register_server({
+"        \ 'name': 'html-languageserver',
+"        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
+"        \ 'whitelist': ['htm', 'html'],
+"        \ })
+"endif
+
+if executable('json-languageserver')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'json-languageserver',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'json-languageserver --stdio']},
+        \ 'whitelist': ['json'],
+        \ })
+endif
+
+source $HOME/.config/nvim/status_tab_line.vim
