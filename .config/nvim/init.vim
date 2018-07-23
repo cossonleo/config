@@ -98,17 +98,14 @@ Plug 'Valloric/ListToggle'
 "主题
 Plug 'iCyMind/NeoSolarized'
 " vim-over
-Plug 'osyo-manga/vim-over'
+"Plug 'osyo-manga/vim-over'
 "fcitx.vim
 Plug 'vim-scripts/fcitx.vim'
 "vim-signature
-Plug 'kshenoy/vim-signature'
+"Plug 'kshenoy/vim-signature'
 "leaderf
 "Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'Shougo/denite.nvim'
-"airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 "git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -120,17 +117,14 @@ Plug 'vim-scripts/TaskList.vim'
 Plug 'jremmen/vim-ripgrep'
 
 """"""""""""""""""language"""""""""""""""""""
-Plug 'huawenyu/neogdb.vim'
-Plug 'Shougo/echodoc.vim'
 
 Plug 'prabirshrestha/async.vim'
-"Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'Shougo/echodoc.vim'
 Plug 'Cosson2017/vim-lsp'
-"Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 "c family highlight
-Plug 'arakashic/chromatica.nvim' ", {'for':['cpp', 'h', 'hpp', 'c']}
-Plug 'rhysd/vim-clang-format', {'for':['cpp', 'h', 'hpp', 'c']}
+"Plug 'arakashic/chromatica.nvim' ", {'for':['cpp', 'h', 'hpp', 'c']}
+"Plug 'rhysd/vim-clang-format', {'for':['cpp', 'h', 'hpp', 'c']}
 
 "qml
 Plug 'peterhoeg/vim-qml', {'for':['qml']}
@@ -148,7 +142,7 @@ Plug 'majutsushi/tagbar'
 "mine
 Plug 'Cosson2017/neo-comment.nvim'
 Plug 'Cosson2017/neo-smooth-scroll.nvim'
-Plug 'Cosson2017/lsp-completor.nvim'
+Plug 'Cosson2017/nvim-completor'
 Plug 'Cosson2017/neo-debuger'
 
 call plug#end()            
@@ -214,6 +208,7 @@ let g:rainbow_active = 1
 "denite
 nnoremap <c-p> :Denite file/rec<cr>
 nnoremap <c-b> :Denite buffer<cr>
+call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
 call denite#custom#map(
 	  \ 'insert',
 	  \ '<c-j>',
@@ -228,7 +223,6 @@ call denite#custom#map(
 	  \)
 
 "leaderf
-"let g:Lf_WorkingDirectoryMode = 'a'
 "let g:Lf_UseMemoryCache = 0
 "let g:Lf_ShortcutF = '<c-p>'
 "let g:Lf_ShortcutB = '<c-b>'
@@ -465,11 +459,11 @@ if executable('docker-langserver')
 endif
 
 "nnoremap <leader>c :call luaeval('require("init").add()')<cr>
-au User lsp_setup call lsp#register_server({
-			\ 'name': 'php-language-server',
-			\ 'cmd': {server_info->['php', expand('~/.vim/plugged/php-language-server/bin/php-language-server.php')]},
-			\ 'whitelist': ['php']
-			\ })
+"au User lsp_setup call lsp#register_server({
+"			\ 'name': 'php-language-server',
+"			\ 'cmd': {server_info->['php', expand('~/.vim/plugged/php-language-server/bin/php-language-server.php')]},
+"			\ 'whitelist': ['php']
+"			\ })
 
 
 "\ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.flowconfig'))},
@@ -502,6 +496,14 @@ if executable('json-languageserver')
         \ 'name': 'json-languageserver',
         \ 'cmd': {server_info->[&shell, &shellcmdflag, 'json-languageserver --stdio']},
         \ 'whitelist': ['json'],
+        \ })
+endif
+
+if executable('wxml-languageserver')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'wxml-languageserver',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'wxml-languageserver --stdio']},
+        \ 'whitelist': ['wxml'],
         \ })
 endif
 
