@@ -121,6 +121,7 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'prabirshrestha/async.vim'
 Plug 'Shougo/echodoc.vim'
 Plug 'Cosson2017/vim-lsp'
+Plug 'Cosson2017/vim-lsc'
 
 "c family highlight
 "Plug 'arakashic/chromatica.nvim' ", {'for':['cpp', 'h', 'hpp', 'c']}
@@ -128,7 +129,8 @@ Plug 'Cosson2017/vim-lsp'
 
 "qml
 Plug 'peterhoeg/vim-qml', {'for':['qml']}
-
+"wx program
+Plug 'chemzqm/wxapp.vim'
 "tagbar 
 Plug 'majutsushi/tagbar'
 
@@ -506,5 +508,38 @@ if executable('wxml-languageserver')
         \ 'whitelist': ['wxml'],
         \ })
 endif
+
+let g:lsc_preview_split_direction = 'below'
+let g:lsc_enable_autocomplete = v:false
+let g:lsc_auto_map = v:true " Use defaults
+" ... or set only the keys you want mapped, defaults are:
+let g:lsc_auto_map = {
+    \ 'GoToDefinition': '<C-]>',
+    \ 'FindReferences': '<A-f>',
+    \ 'NextReference': '<A-n>',
+    \ 'PreviousReference': '<A-N>',
+    \ 'FindImplementations': '<A-i>',
+    \ 'FindCodeActions': '<A-a>',
+    \ 'DocumentSymbol': 'go',
+    \ 'WorkspaceSymbol': 'gS',
+    \ 'ShowHover': '<A-h>',
+    \ 'Completion': 'completefunc',
+    \}
+
+
+"	\ 'lua': {
+"	\	'command': 'lua-lsp',
+"    \   'enabled': v:true,
+"	\	'message_hooks': {
+"	\		'initialization_options': { 'debugMode': 'false' },
+"	\	},
+"	\},
+let g:lsc_server_commands = {
+	\ 'go': 'go-langserver -gocodecompletion -logfile=/tmp/golangserver.log',
+	\ 'cpp': 'ccls',
+	\ 'rls': 'rustup run stable rls',
+	\ 'dockerfile': 'docker-langserver --stdio',
+	\ 'lua': 'lua-lsp',
+\}
 
 source $HOME/.config/nvim/status_tab_line.vim
