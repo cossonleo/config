@@ -120,7 +120,7 @@ Plug 'jremmen/vim-ripgrep'
 
 Plug 'prabirshrestha/async.vim'
 Plug 'Shougo/echodoc.vim'
-Plug 'Cosson2017/vim-lsp'
+"Plug 'Cosson2017/vim-lsp'
 Plug 'Cosson2017/vim-lsc'
 
 "c family highlight
@@ -509,19 +509,22 @@ if executable('wxml-languageserver')
         \ })
 endif
 
+"vim-lsc
+au BufRead,BufNewFile *.ts,javascript.jsx, *.js	set filetype=javascript
+au BufRead,BufNewFile *.wxml	set filetype=wxml
 let g:lsc_preview_split_direction = 'below'
 let g:lsc_enable_autocomplete = v:false
 let g:lsc_auto_map = v:true " Use defaults
 " ... or set only the keys you want mapped, defaults are:
 let g:lsc_auto_map = {
-    \ 'GoToDefinition': '<C-]>',
+    \ 'GoToDefinition': '<A-g>',
     \ 'FindReferences': '<A-f>',
     \ 'NextReference': '<A-n>',
     \ 'PreviousReference': '<A-N>',
     \ 'FindImplementations': '<A-i>',
     \ 'FindCodeActions': '<A-a>',
-    \ 'DocumentSymbol': 'go',
-    \ 'WorkspaceSymbol': 'gS',
+    \ 'DocumentSymbol': '',
+    \ 'WorkspaceSymbol': '',
     \ 'ShowHover': '<A-h>',
     \ 'Completion': 'completefunc',
     \}
@@ -537,9 +540,15 @@ let g:lsc_auto_map = {
 let g:lsc_server_commands = {
 	\ 'go': 'go-langserver -gocodecompletion -logfile=/tmp/golangserver.log',
 	\ 'cpp': 'ccls',
-	\ 'rls': 'rustup run stable rls',
+	\ 'rust': 'rustup run stable rls',
 	\ 'dockerfile': 'docker-langserver --stdio',
 	\ 'lua': 'lua-lsp',
+	\ 'javascript': "javascript-typescript-stdio",
+	\ 'wxml': 'wxml-languageserver',
+	\ 'json': 'json-languageserver',
+	\ 'css': 'css-languageserver --stdio',
+	\ 'html': 'html-languageserver --stdio',
+	\ 'python': 'pyls --log-file=/tmp/pyls.log',
 \}
 
 source $HOME/.config/nvim/status_tab_line.vim
