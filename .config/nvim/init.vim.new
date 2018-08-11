@@ -36,10 +36,14 @@ set fo=""
 "set foldmethod=syntax
 
 
+
 " neovim python支持 需要sudo pip3 install --upgrade neovim 
-let g:python3_host_prog = '/usr/bin/python3'
-let g:python3_host_skip_check = 1
-let g:loaded_python_provider = 0
+"let g:python_host_prog = '/usr/bin/python'
+"let g:python_host_skip_check = 1
+let g:python3_host_prog = '/usr/bin/python3.4'
+let g:python_host_skip_check = 1
+"let g:loaded_python3_provider = 1
+let g:loaded_python_provider = 1
 
 let mapleader=' '
 
@@ -98,15 +102,11 @@ Plug 'tpope/vim-surround'
 Plug 'Valloric/ListToggle'
 "主题
 Plug 'iCyMind/NeoSolarized'
-" vim-over
-"Plug 'osyo-manga/vim-over'
 "fcitx.vim
 Plug 'vim-scripts/fcitx.vim'
-"vim-signature
-"Plug 'kshenoy/vim-signature'
 "leaderf
-"Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plug 'Shougo/denite.nvim'
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+"Plug 'Shougo/denite.nvim'
 "git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -118,10 +118,9 @@ Plug 'vim-scripts/TaskList.vim'
 Plug 'jremmen/vim-ripgrep'
 
 """"""""""""""""""language"""""""""""""""""""
-
 Plug 'Shougo/echodoc.vim'
 "Plug 'Cosson2017/vim-lsc'
-"Plug 'Cosson2017/vim-lsp'
+Plug 'Cosson2017/vim-lsp'
 Plug 'prabirshrestha/async.vim'
 
 "c family highlight
@@ -129,7 +128,7 @@ Plug 'prabirshrestha/async.vim'
 "Plug 'rhysd/vim-clang-format', {'for':['cpp', 'h', 'hpp', 'c']}
 
 "qml
-Plug 'peterhoeg/vim-qml', {'for':['qml']}
+"Plug 'peterhoeg/vim-qml', {'for':['qml']}
 "wx program
 Plug 'chemzqm/wxapp.vim'
 "tagbar 
@@ -310,7 +309,7 @@ let g:neobugger_leader = '<leader>'
 nnoremap <c-a> :Rg<cr>
 
 "tagbar
-nnoremap <F12> :TagbarToggle<CR>
+nnoremap <leader>b :TagbarToggle<CR>
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
 let g:tagbar_sort = 0
@@ -349,7 +348,7 @@ let g:tagbar_type_go = {
 "m  struct members
 "M  struct anonymous members
 "u  unknown
-
+				
 
 "nvim-completor
 let g:load_nvim_completor_lsp = 1
